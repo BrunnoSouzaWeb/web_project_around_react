@@ -14,11 +14,14 @@ export default function Main({
   onAddPlaceClick,
   onEditAvatarClick,
   closeAllPopups,
+  userName,
+  userDescription,
+  userAvatar,
 }) {
   return (
     <main className="content">
       <section className="profile">
-        <img src={profile} alt="perfil" className="profile__image" />
+        <img src={userAvatar} alt="perfil" className="profile__image" />
         <img
           src={editAvatar}
           alt="editavatar"
@@ -27,7 +30,7 @@ export default function Main({
         />
         <div className="profile__info">
           <div className="profile__name">
-            <p className="profile__text" />
+            <p className="profile__text"> {userName} </p>
             <img
               src={editButtonProfile}
               alt="editar"
@@ -35,7 +38,7 @@ export default function Main({
               onClick={onEditProfileClick}
             />
           </div>
-          <p className="profile__profession" />
+          <p className="profile__profession"> {userDescription} </p>
         </div>
         <img
           src={addButtonProfile}
@@ -52,7 +55,6 @@ export default function Main({
         isOpen={EditProfile}
         onClose={closeAllPopups}
       >
-        {" "}
         <input
           type="text"
           id="input-name"
