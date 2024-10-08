@@ -4,8 +4,17 @@ import editAvatar from "../images/edit_avatar.png";
 import editButtonProfile from "../images/editbuttonprofile.svg";
 import addButtonProfile from "../images/addbuttonprofile.png";
 import closeIcon from "../images/Close-icon.svg";
+import PopupWithForm from "./PopupWithForm";
 
-export default function Main() {
+export default function Main({
+  EditProfile,
+  AddPlace,
+  EditAvatar,
+  onEditProfileClick,
+  onAddPlaceClick,
+  onEditAvatarClick,
+  closeAllPopups,
+}) {
   return (
     <main className="content">
       <section className="profile">
@@ -14,6 +23,7 @@ export default function Main() {
           src={editAvatar}
           alt="editavatar"
           className="profile__edit-avatar"
+          onClick={onEditAvatarClick}
         />
         <div className="profile__info">
           <div className="profile__name">
@@ -22,6 +32,7 @@ export default function Main() {
               src={editButtonProfile}
               alt="editar"
               className="profile__edit-button"
+              onClick={onEditProfileClick}
             />
           </div>
           <p className="profile__profession" />
@@ -30,100 +41,83 @@ export default function Main() {
           src={addButtonProfile}
           alt="adicionar"
           className="profile__add-button"
+          onClick={onAddPlaceClick}
         />
       </section>
       <section className="elements" />
       <template className="template-card" />
-      <div className="popup" id="popup-perfil">
-        <div className="popup__overlay" />
-        <form id="form-perfil" className="popup__form" noValidate="">
-          <img
-            src={closeIcon}
-            alt="Botão Fechar"
-            className="popup__button-closed"
-          />
-          <h3 className="popup__header">Editar perfil</h3>
-          <input
-            type="text"
-            id="input-name"
-            name="name"
-            className="popup__name popup__input"
-            minLength={2}
-            maxLength={40}
-            required=""
-          />
-          <span className="popup__error-visible input-name-error"> </span>
-          <input
-            type="text"
-            id="input-description"
-            name="about"
-            className="popup__description popup__input"
-            minLength={2}
-            maxLength={200}
-            required=""
-          />
-          <span className="popup__error-visible input-description-error">
-            {" "}
-          </span>
-          <button type="submit" className="popup__button-create popup__button">
-            Salvar
-          </button>
-        </form>
-      </div>
-      <div className="popup" id="popup-card">
-        <div className="popup__overlay" />
-        <form
-          id="form-card"
-          className="popup__card-form popup__form"
-          noValidate=""
-        >
-          <img
-            src={closeIcon}
-            alt="Botão Fechar"
-            className="popup__card-button-closed"
-          />
-          <h3 className="popup__card-header">Novo Local</h3>
-          <input
-            type="text"
-            id="input-title"
-            className="popup__card-title popup__input"
-            defaultValue=""
-            minLength={2}
-            maxLength={30}
-            placeholder="Título"
-            required=""
-          />
-          <span className="popup__error-visible input-title-error" />
-          <input
-            type="url"
-            id="input-url"
-            className="popup__card-url popup__input"
-            defaultValue=""
-            minLength={2}
-            placeholder="Link da imagem"
-            required=""
-          />
-          <span className="popup__error-visible input-url-error"> </span>
-          <button
-            type="submit"
-            className="popup__card-button-create popup__button"
-          >
-            Salvar
-          </button>
-        </form>
-      </div>
-      <div className="popup" id="popup-image">
-        <div className="popup__overlay" />
-        <div className="popup__image-content">
-          <img
-            src={closeIcon}
-            alt="Botão Fechar"
-            className="popup__image-button-closed"
-          />
-          <img src={""} alt="" className="popup__image-photo" />
-          <p className="popup__image-name" />
-        </div>
-      </div>
+      <PopupWithForm
+        name={"form-perfil"}
+        title={"Editar perfil"}
+        isOpen={EditProfile}
+        onClose={closeAllPopups}
+      >
+        {" "}
+        <input
+          type="text"
+          id="input-name"
+          name="name"
+          className="popup__name popup__input"
+          minLength={2}
+          maxLength={40}
+          required=""
+        />
+        <span className="popup__error-visible input-name-error"> </span>
+        <input
+          type="text"
+          id="input-description"
+          name="about"
+          className="popup__description popup__input"
+          minLength={2}
+          maxLength={200}
+          required=""
+        />
+        <span className="popup__error-visible input-description-error"> </span>
+      </PopupWithForm>
+      <PopupWithForm
+        name={"form-card"}
+        title={"Novo Local"}
+        isOpen={AddPlace}
+        onClose={closeAllPopups}
+      >
+        <input
+          type="text"
+          id="input-title"
+          className="popup__card-title popup__input"
+          defaultValue=""
+          minLength={2}
+          maxLength={30}
+          placeholder="Título"
+          required=""
+        />
+        <span className="popup__error-visible input-title-error" />
+        <input
+          type="url"
+          id="input-url"
+          className="popup__card-url popup__input"
+          defaultValue=""
+          minLength={2}
+          placeholder="Link da imagem"
+          required=""
+        />
+        <span className="popup__error-visible input-url-error"> </span>
+      </PopupWithForm>
+      <PopupWithForm
+        name={"form-avatar"}
+        title={"Alterar a foto do perfil"}
+        isOpen={EditAvatar}
+        onClose={closeAllPopups}
+      >
+        <input
+          type="url"
+          id="input-link"
+          name="avatarLink"
+          className="popup__avatar-url popup__input"
+          placeholder="Link da imagem"
+          required=""
+        />
+        <span className="popup__error-visible input-link-error"> </span>
+      </PopupWithForm>
       <div className="popup" id="popup-confirmation">
         <div className="popup__overlay" />
         <form
@@ -141,36 +135,6 @@ export default function Main() {
             className="popup__confirmation-button-create popup__button"
           >
             Sim
-          </button>
-        </form>
-      </div>
-      <div className="popup" id="popup-avatar">
-        <div className="popup__overlay" />
-        <form
-          id="form-avatar"
-          className="popup__avatar-form popup__form"
-          noValidate=""
-        >
-          <img
-            src={closeIcon}
-            alt="Botão Fechar"
-            className="popup__avatar-button-closed"
-          />
-          <h2 className="popup__avatar-header">Alterar a foto do perfil</h2>
-          <input
-            type="url"
-            id="input-link"
-            name="avatarLink"
-            className="popup__avatar-url popup__input"
-            placeholder="Link da imagem"
-            required=""
-          />
-          <span className="popup__error-visible input-link-error"> </span>
-          <button
-            type="submit"
-            className="popup__avatar-button-create popup__button"
-          >
-            Salvar
           </button>
         </form>
       </div>
