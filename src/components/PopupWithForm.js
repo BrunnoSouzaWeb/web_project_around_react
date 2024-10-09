@@ -6,6 +6,9 @@ export default function PopupWithForm({
   children,
   isOpen,
   onClose,
+  formClass,
+  headerClass,
+  buttonClass,
 }) {
   return (
     <div
@@ -13,16 +16,19 @@ export default function PopupWithForm({
       id="popup-perfil"
     >
       <div className="popup__overlay" />
-      <form id={name} className="popup__form" noValidate="">
+      <form id={name} className={`${formClass} popup__form `} noValidate="">
         <img
           src={closeIcon}
           alt="Botão Fechar"
           className="popup__button-closed"
           onClick={onClose}
         />
-        <h3 className="popup__header">{title}</h3>
+        <h2 className={`${headerClass} popup__header`}>{title}</h2>
         {children}
-        <button type="submit" className="popup__button-create popup__button">
+        <button
+          type="submit"
+          className={`${buttonClass} popup__button-create popup__button`}
+        >
           Salvar
         </button>
       </form>

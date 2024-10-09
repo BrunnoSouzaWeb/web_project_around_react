@@ -120,6 +120,9 @@ export default function Main({
         title={"Alterar a foto do perfil"}
         isOpen={EditAvatar}
         onClose={closeAllPopups}
+        formClass={"popup__avatar-form"}
+        headerClass={"popup__avatar-header"}
+        buttonClass={"popup__avatar-button-create"}
       >
         <input
           type="url"

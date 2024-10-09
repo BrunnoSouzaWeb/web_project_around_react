@@ -5,8 +5,6 @@ export default function Card({ card, onCardClick }) {
   function handleClick() {
     onCardClick(card);
   }
-  //console.log(card);
-  //console.log(card.name);
   return (
     <article className="elements__card" key={card._id}>
       <img
@@ -26,29 +24,5 @@ export default function Card({ card, onCardClick }) {
         </div>
       </div>
     </article>
-
-    /*
-    <template class="template-card">
-      <article class="elements__card">
-        <img src="." alt="" class="elements__image" />
-        <img
-          src="./images/Trash.svg"
-          alt="Botão de lixeira"
-          class="elements__image-trash"
-        />
-        <div class="elements__text">
-          <h1 class="elements__title"></h1>
-          <div class="elements_info">
-            <img
-              src="./images/like.png"
-              alt="Botão de curtir"
-              class="elements__image-like"
-            />
-            <p class="elements__count-like"></p>
-          </div>
-        </div>
-      </article>
-    </template>
-    */
   );
 }

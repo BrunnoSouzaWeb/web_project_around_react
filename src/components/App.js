@@ -17,8 +17,6 @@ function App() {
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
 
-  //const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
-
   const onEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
   };
@@ -33,7 +31,6 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard(card);
-    //  setIsImagePopupOpen(true);
   }
 
   const closeAllPopups = () => {
@@ -41,7 +38,6 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard(null);
-    //setIsImagePopupOpen(false);
   };
 
   useEffect(() => {
