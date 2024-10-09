@@ -5,6 +5,7 @@ import editButtonProfile from "../images/editbuttonprofile.svg";
 import addButtonProfile from "../images/addbuttonprofile.png";
 import closeIcon from "../images/Close-icon.svg";
 import PopupWithForm from "./PopupWithForm";
+import Card from "./Card";
 
 export default function Main({
   EditProfile,
@@ -17,6 +18,8 @@ export default function Main({
   userName,
   userDescription,
   userAvatar,
+  cards,
+  onCardClick,
 }) {
   return (
     <main className="content">
@@ -47,8 +50,14 @@ export default function Main({
           onClick={onAddPlaceClick}
         />
       </section>
+
       <section className="elements" />
-      <template className="template-card" />
+      <template className="elements">
+        {cards.map((card) => (
+          <Card key={card._id} card={card} onCardClick={onCardClick} />
+        ))}
+      </template>
+
       <PopupWithForm
         name={"form-perfil"}
         title={"Editar perfil"}
@@ -76,6 +85,7 @@ export default function Main({
         />
         <span className="popup__error-visible input-description-error"> </span>
       </PopupWithForm>
+
       <PopupWithForm
         name={"form-card"}
         title={"Novo Local"}
@@ -104,6 +114,7 @@ export default function Main({
         />
         <span className="popup__error-visible input-url-error"> </span>
       </PopupWithForm>
+
       <PopupWithForm
         name={"form-avatar"}
         title={"Alterar a foto do perfil"}
@@ -120,6 +131,7 @@ export default function Main({
         />
         <span className="popup__error-visible input-link-error"> </span>
       </PopupWithForm>
+
       <div className="popup" id="popup-confirmation">
         <div className="popup__overlay" />
         <form
