@@ -7,6 +7,9 @@ import closeIcon from "../images/Close-icon.svg";
 import PopupWithForm from "./PopupWithForm";
 import Card from "./Card";
 
+import { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 export default function Main({
   EditProfile,
   AddPlace,
@@ -15,16 +18,19 @@ export default function Main({
   onAddPlaceClick,
   onEditAvatarClick,
   closeAllPopups,
-  userName,
-  userDescription,
-  userAvatar,
+  // userName,
+  // userDescription,
+  //  userAvatar,
   cards,
   onCardClick,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+  if (!currentUser) return null;
+
   return (
     <main className="content">
       <section className="profile">
-        <img src={userAvatar} alt="perfil" className="profile__image" />
+        <img src={currentUser.avatar} alt="perfil" className="profile__image" />
         <img
           src={editAvatar}
           alt="editavatar"
@@ -33,7 +39,7 @@ export default function Main({
         />
         <div className="profile__info">
           <div className="profile__name">
-            <p className="profile__text"> {userName} </p>
+            <p className="profile__text"> {currentUser.name} </p>
             <img
               src={editButtonProfile}
               alt="editar"
@@ -41,7 +47,7 @@ export default function Main({
               onClick={onEditProfileClick}
             />
           </div>
-          <p className="profile__profession"> {userDescription} </p>
+          <p className="profile__profession"> {currentUser.about} </p>
         </div>
         <img
           src={addButtonProfile}

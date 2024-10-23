@@ -5,6 +5,8 @@ import ImagePopup from "./ImagePopup";
 import { useState, useEffect } from "react";
 import api from "../utils/api";
 
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -16,6 +18,8 @@ function App() {
 
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
+
+  const [currentUser, setCurrentUser] = useState({});
 
   const onEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
@@ -40,6 +44,7 @@ function App() {
     setSelectedCard(null);
   };
 
+  /*
   useEffect(() => {
     api
       .getUserInfo()
@@ -47,6 +52,20 @@ function App() {
         setUserName(userData.name);
         setUserDescription(userData.about);
         setUserAvatar(userData.avatar);
+      })
+      .catch((err) => {
+        console.log("Erro ao carregar dados do usuário: ", err);
+      });
+  }, []);
+  */
+
+  useEffect(() => {
+    api
+      .getUserInfo()
+      .then((ApiUserInfo) => {
+        console.log("dentro xxx");
+        console.log(ApiUserInfo);
+        setCurrentUser(ApiUserInfo);
       })
       .catch((err) => {
         console.log("Erro ao carregar dados do usuário: ", err);
@@ -61,27 +80,29 @@ function App() {
   }, []);
 
   return (
-    <div className="page">
-      <Header />
-      <Main
-        EditProfile={isEditProfilePopupOpen}
-        AddPlace={isAddPlacePopupOpen}
-        EditAvatar={isEditAvatarPopupOpen}
-        onEditProfileClick={onEditProfileClick}
-        onAddPlaceClick={onAddPlaceClick}
-        onEditAvatarClick={onEditAvatarClick}
-        closeAllPopups={closeAllPopups}
-        userName={userName} // Passando os dados do usuário como props
-        userDescription={userDescription}
-        userAvatar={userAvatar}
-        cards={cards}
-        onCardClick={handleCardClick}
-      />
-      {selectedCard && (
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-      )}
-      <Footer />
-    </div>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        <Header />
+        <Main
+          EditProfile={isEditProfilePopupOpen}
+          AddPlace={isAddPlacePopupOpen}
+          EditAvatar={isEditAvatarPopupOpen}
+          onEditProfileClick={onEditProfileClick}
+          onAddPlaceClick={onAddPlaceClick}
+          onEditAvatarClick={onEditAvatarClick}
+          closeAllPopups={closeAllPopups}
+          // userName={userName} // Passando os dados do usuário como props
+          // userDescription={userDescription} // agora é variável global
+          // userAvatar={userAvatar}
+          cards={cards}
+          onCardClick={handleCardClick}
+        />
+        {selectedCard && (
+          <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        )}
+        <Footer />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 
