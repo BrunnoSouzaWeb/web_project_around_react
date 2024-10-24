@@ -79,6 +79,21 @@ function App() {
       .catch((err) => console.log("Erro ao obter dados dos cartões :", err));
   }, []);
 
+  async function handleCardLike(card) {
+    const isLiked = card.likes.some((user) => user._id === currentUser._id);
+
+    await api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard
+          )
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -96,6 +111,7 @@ function App() {
           // userAvatar={userAvatar}
           cards={cards}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
         />
         {selectedCard && (
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />

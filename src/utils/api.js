@@ -139,6 +139,25 @@ class Api {
         console.log(err);
       });
   }
+
+  /// NOVAS COISA
+
+  changeLikeCardStatus(cardId, isLiked) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: isLiked ? "PUT" : "DELETE",
+      headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 }
 
 const api = new Api({
