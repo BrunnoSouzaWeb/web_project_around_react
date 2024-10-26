@@ -122,12 +122,14 @@ class Api {
       });
   }
 
-  editFotoPerfil(data) {
+  /// avatar: data.avatarLink,
+  updateAvatar(avatar) {
+    console.log("dentro da api.js AVATAR");
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data.avatarLink,
+        avatar,
       }),
     })
       .then((res) => {

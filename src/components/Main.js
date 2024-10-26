@@ -129,7 +129,7 @@ export default function Main({
         <span className="popup__error-visible input-url-error"> </span>
       </PopupWithForm>
 
-      <PopupWithForm
+      {/* <PopupWithForm
         name={"form-avatar"}
         title={"Alterar a foto do perfil"}
         isOpen={EditAvatar}
@@ -147,7 +147,7 @@ export default function Main({
           required=""
         />
         <span className="popup__error-visible input-link-error"> </span>
-      </PopupWithForm>
+      </PopupWithForm> */}
 
       <div className="popup" id="popup-confirmation">
         <div className="popup__overlay" />

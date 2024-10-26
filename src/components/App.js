@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import api from "../utils/api";
 
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
 
@@ -29,6 +30,10 @@ function App() {
     setIsEditProfilePopupOpen(true);
   };
 
+  const handleEditAvatarClick = () => {
+    setIsEditAvatarPopupOpen(true);
+  };
+
   function handleUpdateUser({ name, about }) {
     console.log("handleUpdateUser");
     console.log({ name, about });
@@ -42,6 +47,13 @@ function App() {
         console.error(`Erro ao atualizar o perfil: ${err}`); // Se há um erro, será exibido no console;
       });
   }
+
+  const handleUpdateAvatar = async ({ avatar }) => {
+    return await api.updateAvatar(avatar).then((updatedUserData) => {
+      setCurrentUser(updatedUserData);
+      closeAllPopups();
+    });
+  };
 
   const onAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
@@ -141,6 +153,11 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+        />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
         />
         <Header />
         <Main
