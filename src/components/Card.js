@@ -2,10 +2,10 @@ import trash from "../images/Trash.svg";
 import like from "../images/like.png";
 
 import { useContext } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import CurrentUserContext from "../contexts/CurrentUserContext.js";
 
-export default function Card({ card, onCardClick, onCardLike }) {
-  //console.log(onCardLike);
+export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+  //console.log(onCardDelete);
 
   const { link, likes, name, owner } = card;
   const currentUser = useContext(CurrentUserContext); //Obtem o valor de contexto de CurrentUserContext
@@ -34,6 +34,10 @@ export default function Card({ card, onCardClick, onCardLike }) {
     onCardLike(card);
   };
 
+  const handleDeleteClick = () => {
+    onCardDelete(card);
+  };
+
   return (
     <article className="elements__card" key={card._id}>
       <img
@@ -44,7 +48,12 @@ export default function Card({ card, onCardClick, onCardLike }) {
       />
 
       {isOwn && (
-        <img className={cardDeleteButtonClassName} src={trash} alt={""} />
+        <img
+          className={cardDeleteButtonClassName}
+          onClick={handleDeleteClick}
+          src={trash}
+          alt={""}
+        />
       )}
 
       {/* <img className="elements__image-trash" src={trash} alt={""} /> */}

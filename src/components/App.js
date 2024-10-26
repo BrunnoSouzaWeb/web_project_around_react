@@ -1,3 +1,5 @@
+//import React from "react";
+
 import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
@@ -5,7 +7,9 @@ import ImagePopup from "./ImagePopup";
 import { useState, useEffect } from "react";
 import api from "../utils/api";
 
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
+
+import CurrentUserContext from "../contexts/CurrentUserContext.js";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -24,6 +28,20 @@ function App() {
   const onEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
   };
+
+  function handleUpdateUser({ name, about }) {
+    console.log("handleUpdateUser");
+    console.log({ name, about });
+    api
+      .updateEditPerfil(name, about)
+      .then((updatedUserData) => {
+        setCurrentUser(updatedUserData);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(`Erro ao atualizar o perfil: ${err}`); // Se há um erro, será exibido no console;
+      });
+  }
 
   const onAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
@@ -94,12 +112,38 @@ function App() {
       .catch((error) => console.error(error));
   }
 
+  function handleCardDelete(card) {
+    console.log("dentro");
+    console.log(card);
+
+    if (!card) {
+      console.log("SAINDO");
+      return;
+    }
+
+    //// return;
+
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        // Atualiza o estados dos cards
+        setCards((state) => state.filter((c) => c._id !== card._id));
+        console.log("Cartao eliminado corretamente");
+        ///closeAllPopups(); // Fechas os popups
+      })
+      .catch((err) => console.error(`Erro ao eliminar o cartao: ${err}`));
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
         <Header />
         <Main
-          EditProfile={isEditProfilePopupOpen}
           AddPlace={isAddPlacePopupOpen}
           EditAvatar={isEditAvatarPopupOpen}
           onEditProfileClick={onEditProfileClick}
@@ -112,6 +156,7 @@ function App() {
           cards={cards}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         {selectedCard && (
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />

@@ -8,7 +8,7 @@ import PopupWithForm from "./PopupWithForm";
 import Card from "./Card";
 
 import { useContext } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import CurrentUserContext from "../contexts/CurrentUserContext.js";
 
 export default function Main({
   EditProfile,
@@ -24,6 +24,7 @@ export default function Main({
   cards,
   onCardClick,
   onCardLike,
+  onCardDelete,
 }) {
   const currentUser = useContext(CurrentUserContext);
   if (!currentUser) return null;
@@ -66,11 +67,12 @@ export default function Main({
             card={card}
             onCardClick={onCardClick}
             onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
           />
         ))}
       </template>
 
-      <PopupWithForm
+      {/* <PopupWithForm
         name={"form-perfil"}
         title={"Editar perfil"}
         isOpen={EditProfile}
@@ -96,7 +98,7 @@ export default function Main({
           required=""
         />
         <span className="popup__error-visible input-description-error"> </span>
-      </PopupWithForm>
+      </PopupWithForm> */}
 
       <PopupWithForm
         name={"form-card"}

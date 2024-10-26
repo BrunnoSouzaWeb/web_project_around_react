@@ -9,6 +9,7 @@ export default function PopupWithForm({
   formClass,
   headerClass,
   buttonClass,
+  onSubmit,
 }) {
   return (
     <div
@@ -16,7 +17,15 @@ export default function PopupWithForm({
       id="popup-perfil"
     >
       <div className="popup__overlay" />
-      <form id={name} className={`${formClass} popup__form `} noValidate="">
+      <form
+        id={name}
+        className={`${formClass} popup__form `}
+        noValidate=""
+        onSubmit={(e) => {
+          e.preventDefault(); // Evita envio padrão do navegador
+          onSubmit && onSubmit(e); // Garante chamada do onSubmit
+        }}
+      >
         <img
           src={closeIcon}
           alt="Botão Fechar"

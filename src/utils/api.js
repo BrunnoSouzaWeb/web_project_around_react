@@ -36,7 +36,9 @@ class Api {
       });
   }
 
-  editPerfil({ name, about }) {
+  updateEditPerfil(name, about) {
+    console.log("dentro da api.js");
+    console.log({ name, about });
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
