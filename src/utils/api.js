@@ -56,7 +56,8 @@ class Api {
       });
   }
 
-  addNewCard({ name, link }) {
+  addNewCard(name, link) {
+    console.log("dentro do create");
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -70,6 +71,7 @@ class Api {
         return Promise.reject(`Error: ${res.status}`);
       })
       .catch((err) => {
+        console.log("deu erro");
         console.log(err);
       });
   }

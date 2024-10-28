@@ -10,16 +10,21 @@ import api from "../utils/api";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 
+import NewCard from "../components/NewCard.js";
+
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isNewCardOpen, setIsNewCardOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
+  /*
+  xxx
   const [userName, setUserName] = useState("");
   const [userDescription, setUserDescription] = useState("");
   const [userAvatar, setUserAvatar] = useState("");
+  */
 
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
@@ -55,8 +60,11 @@ function App() {
     });
   };
 
-  const onAddPlaceClick = () => {
-    setIsAddPlacePopupOpen(true);
+  const handleAddPlaceSubmit = async ({ name, link }) => {
+    return await api.addNewCard(name, link).then((newCard) => {
+      setCards([newCard, ...cards]);
+      closeAllPopups();
+    });
   };
 
   const onEditAvatarClick = () => {
@@ -67,11 +75,16 @@ function App() {
     setSelectedCard(card);
   }
 
+  const onAddPlaceClick = () => {
+    setIsNewCardOpen(true);
+  };
+
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
+    setIsNewCardOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard(null);
+    setIsNewCardOpen(false);
   };
 
   /*
@@ -154,6 +167,13 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
+
+        <NewCard
+          isOpen={isNewCardOpen}
+          onClose={closeAllPopups}
+          onAddPlaceSubmit={handleAddPlaceSubmit}
+        ></NewCard>
+
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
@@ -161,7 +181,7 @@ function App() {
         />
         <Header />
         <Main
-          AddPlace={isAddPlacePopupOpen}
+          AddPlace={isNewCardOpen}
           EditAvatar={isEditAvatarPopupOpen}
           onEditProfileClick={onEditProfileClick}
           onAddPlaceClick={onAddPlaceClick}

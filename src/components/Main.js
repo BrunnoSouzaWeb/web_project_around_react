@@ -8,19 +8,13 @@ import PopupWithForm from "./PopupWithForm";
 import Card from "./Card";
 
 import { useContext } from "react";
+import React from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
 
 export default function Main({
-  EditProfile,
-  AddPlace,
-  EditAvatar,
+  onEditAvatarClick,
   onEditProfileClick,
   onAddPlaceClick,
-  onEditAvatarClick,
-  closeAllPopups,
-  // userName,
-  // userDescription,
-  //  userAvatar,
   cards,
   onCardClick,
   onCardLike,
@@ -100,7 +94,7 @@ export default function Main({
         <span className="popup__error-visible input-description-error"> </span>
       </PopupWithForm> */}
 
-      <PopupWithForm
+      {/* <PopupWithForm
         name={"form-card"}
         title={"Novo Local"}
         isOpen={AddPlace}
@@ -127,7 +121,7 @@ export default function Main({
           required=""
         />
         <span className="popup__error-visible input-url-error"> </span>
-      </PopupWithForm>
+      </PopupWithForm> */}
 
       {/* <PopupWithForm
         name={"form-avatar"}
