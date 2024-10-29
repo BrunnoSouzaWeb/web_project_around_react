@@ -1,5 +1,3 @@
-//import React from "react";
-
 import Header from "../components/Header";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
@@ -19,13 +17,6 @@ function App() {
   const [isNewCardOpen, setIsNewCardOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
-  /*
-  xxx
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
-  */
-
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
 
@@ -40,8 +31,6 @@ function App() {
   };
 
   function handleUpdateUser({ name, about }) {
-    console.log("handleUpdateUser");
-    console.log({ name, about });
     api
       .updateEditPerfil(name, about)
       .then((updatedUserData) => {
@@ -49,7 +38,7 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => {
-        console.error(`Erro ao atualizar o perfil: ${err}`); // Se há um erro, será exibido no console;
+        console.error(`Erro ao atualizar o perfil: ${err}`);
       });
   }
 
@@ -87,27 +76,10 @@ function App() {
     setIsNewCardOpen(false);
   };
 
-  /*
-  useEffect(() => {
-    api
-      .getUserInfo()
-      .then((userData) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-      })
-      .catch((err) => {
-        console.log("Erro ao carregar dados do usuário: ", err);
-      });
-  }, []);
-  */
-
   useEffect(() => {
     api
       .getUserInfo()
       .then((ApiUserInfo) => {
-        console.log("dentro xxx");
-        console.log(ApiUserInfo);
         setCurrentUser(ApiUserInfo);
       })
       .catch((err) => {
@@ -138,22 +110,14 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    console.log("dentro");
-    console.log(card);
-
     if (!card) {
-      console.log("SAINDO");
       return;
     }
-
-    //// return;
 
     api
       .deleteCard(card._id)
       .then(() => {
-        // Atualiza o estados dos cards
         setCards((state) => state.filter((c) => c._id !== card._id));
-        console.log("Cartao eliminado corretamente");
         ///closeAllPopups(); // Fechas os popups
       })
       .catch((err) => console.error(`Erro ao eliminar o cartao: ${err}`));
@@ -187,9 +151,6 @@ function App() {
           onAddPlaceClick={onAddPlaceClick}
           onEditAvatarClick={onEditAvatarClick}
           closeAllPopups={closeAllPopups}
-          // userName={userName} // Passando os dados do usuário como props
-          // userDescription={userDescription} // agora é variável global
-          // userAvatar={userAvatar}
           cards={cards}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}

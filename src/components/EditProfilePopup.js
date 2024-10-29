@@ -19,18 +19,19 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    console.log("dentro do effect");
-    console.log(currentUser);
     setName(currentUser.name);
     setDescription(currentUser.about);
   }, [currentUser]);
 
+  React.useEffect(() => {
+    if (!isOpen) {
+      setIsPatching(false);
+    }
+  }, [isOpen]);
+
   function handleSubmit(e) {
     e.preventDefault();
     setIsPatching(true);
-    console.log("vendo");
-    console.log(name);
-    console.log("Valores do formulário:", { name, description });
     onUpdateUser({
       name,
       about: description,
@@ -46,7 +47,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       onSubmit={handleSubmit}
       textBtn={isPatching ? "Salvando..." : "Salvar"}
     >
-      {/* <fieldset className="popup__fieldset"> */}
       <input
         type="text"
         name="name"
@@ -71,7 +71,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         onChange={handleChangeDescription}
       />
       <span className="popup__error-visible input-description-error"> </span>
-      {/* </fieldset> */}
     </PopupWithForm>
   );
 }

@@ -15,16 +15,17 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     setLink(currentUser.avatar);
   }, [currentUser]);
 
+  React.useEffect(() => {
+    if (!isOpen) {
+      setIsPatching(false);
+    }
+  }, [isOpen]);
+
   function handleSubmit(e) {
     e.preventDefault();
     setIsPatching(true);
-    console.log("vendo avatar");
-    console.log(link);
-    console.log("Valores do formulário:", link);
     onUpdateAvatar({
       avatar: avatarRef.current.value,
-    }).finally(() => {
-      setIsPatching(false);
     });
   }
 
@@ -32,12 +33,14 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     <PopupWithForm
       title="Alterar a foto do perfil"
       name="form-avatar"
+      formClass={"popup__avatar-form"}
+      headerClass={"popup__avatar-header"}
+      buttonClass={"popup__avatar-button-create"}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
       textBtn={isPatching ? "Salvando..." : "Salvar"}
     >
-      {/* <fieldset className="popup__fieldset"> */}
       <input
         className="popup__avatar-url popup__input"
         id="input-link"
@@ -49,7 +52,6 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         required
       />
       <p className="popup__error-visible input-link-error"></p>
-      {/* </fieldset> */}
     </PopupWithForm>
   );
 }

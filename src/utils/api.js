@@ -37,8 +37,6 @@ class Api {
   }
 
   updateEditPerfil(name, about) {
-    console.log("dentro da api.js");
-    console.log({ name, about });
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
@@ -57,7 +55,6 @@ class Api {
   }
 
   addNewCard(name, link) {
-    console.log("dentro do create");
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -71,7 +68,6 @@ class Api {
         return Promise.reject(`Error: ${res.status}`);
       })
       .catch((err) => {
-        console.log("deu erro");
         console.log(err);
       });
   }
@@ -124,9 +120,7 @@ class Api {
       });
   }
 
-  /// avatar: data.avatarLink,
   updateAvatar(avatar) {
-    console.log("dentro da api.js AVATAR");
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
@@ -145,8 +139,6 @@ class Api {
         console.log(err);
       });
   }
-
-  /// NOVAS COISA
 
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {

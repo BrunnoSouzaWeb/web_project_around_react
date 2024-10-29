@@ -10,6 +10,7 @@ export default function PopupWithForm({
   headerClass,
   buttonClass,
   onSubmit,
+  textBtn,
 }) {
   return (
     <div
@@ -22,8 +23,8 @@ export default function PopupWithForm({
         className={`${formClass} popup__form `}
         noValidate=""
         onSubmit={(e) => {
-          e.preventDefault(); // Evita envio padrão do navegador
-          onSubmit && onSubmit(e); // Garante chamada do onSubmit
+          e.preventDefault();
+          onSubmit && onSubmit(e);
         }}
       >
         <img
@@ -38,7 +39,7 @@ export default function PopupWithForm({
           type="submit"
           className={`${buttonClass} popup__button-create popup__button`}
         >
-          Salvar
+          {textBtn}
         </button>
       </form>
     </div>

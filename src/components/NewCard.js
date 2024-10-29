@@ -33,9 +33,8 @@ export default function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      textBtn={isPatching ? "Criando..." : "Criar"}
+      textBtn={isPatching ? "Salvando..." : "Salvar"}
     >
-      {/* <fieldset className="popup__fieldset"> */}
       <input
         type="text"
         className="popup__card-title popup__input"
@@ -59,7 +58,6 @@ export default function NewCard({ isOpen, onClose, onAddPlaceSubmit }) {
         onChange={handleChangeLink}
       />
       <p className="input-link-error popup__error"></p>
-      {/* </fieldset> */}
     </PopupWithForm>
   );
 }
